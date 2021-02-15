@@ -44,7 +44,7 @@ Some dependencies (if not already installed):
 
 ### Usage
 
-Just run the Downloader.py file. It will then prompt you for your criteria and then start downloading.
+For first time usage, you must create the finished and temp directories. By default, this is just a folder named "temp" and "finished" within your Downloader.py directory. Then, run the Downloader.py file. It will prompt you for your criteria and then start downloading.
 
 
 
