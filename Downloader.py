@@ -29,6 +29,9 @@ def main():
   backupArchive(ARCHIVE_NAME)
   archiveList = readArchive(ARCHIVE_NAME)
 
+  #Backup index
+  ir.backupIndex(INDEX_NAME);
+
   #Loop through id numbers
   for i in range(startID, endID+1):
 

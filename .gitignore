@@ -1,6 +1,6 @@
 *~
 *.backup
-*.txt
+archive.txt
 __pycache__
 temp
 finished
