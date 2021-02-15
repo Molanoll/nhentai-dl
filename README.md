@@ -10,6 +10,8 @@ One other feature I would like to mention is that a tag file is added to each do
 
 First of all, when I say misses, I mean fetching a specific page from nhentai, searching the tags, and finding out its not what you want. To prevent this problem for an ID based approach, there is an index file that contains all encountered doujins so far. When exploring a specific doujin ID, the first place searched is your index file. If it is not the doujin you want, the program moves onto the next ID. No request is made to the nhentai servers. However, if you encounter an ID not in your index file, a request will be made to nhentai to fetch the doujin information. This information is then added to the index file so that if you search for that ID again, you will have all information locally and no request will have to be made to nhentai unless it fits your criteria.
 
+I  have provided an index.txt file that has over 50,000 entries in it. ID range 300,000 - 340,000 should all be searched, so tag criteria downloads within that range should return instantaneous results.
+
 ### Requirements
 
 OS: Currently built for Windows
