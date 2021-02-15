@@ -12,7 +12,7 @@ SOURCE = "nhentai"
 INDEX_NAME = "index.txt"
 ARCHIVE_NAME = "archive.txt"
 TEMP_DIR = "temp"
-FINISHED_DIR = "E:\Other\Books\Doujinshi"
+FINISHED_DIR = "finished"
 
 def main():
 
