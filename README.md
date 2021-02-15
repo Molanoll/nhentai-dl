@@ -46,7 +46,22 @@ Some dependencies (if not already installed):
 
 For first time usage, you must create the finished and temp directories. By default, this is just a folder named "temp" and "finished" within your Downloader.py directory. Then, run the Downloader.py file. It will prompt you for your criteria and then start downloading.
 
+For tag search criteria:
+* Normal tags should be entered normally   (Ex: netorare, solo female, ...)
+* Prepend language tags with "language:"   (Ex: language:english, language:japanese, ...)
+* Prepend arist tags with "artist:"        (Ex: artist:myfavartist)
+* Prepend group tags with "group:"         (Ex: group:myfavgroup)
+* Prepend character tags with "character:" (Ex: character:satania)
 
+Multiple tags MUST be entered as a comma-separated list. An example tag criteria may look like so:
+
+  language:english,harem,teacher,character:satania,group:23-4do,artist:ichiri
+
+  language:english,lolicon
+
+  mother,shotacon
+
+It's pretty straightforward.
 
 ### Customization
 
