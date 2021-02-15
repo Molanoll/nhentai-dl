@@ -34,7 +34,7 @@ Some dependencies (if not already installed):
 
 ### Usage
 
-For first time usage, you must create the finished and temp directories. By default, this is just a folder named "temp" and "finished" within your Downloader.py directory. Then, run the Downloader.py file. It will prompt you for your criteria and then start downloading.
+For first time usage, you must create the finished and temp directories. By default, this is just a folder named "temp" and "finished" within your Downloader.py directory. Then, run the Downloader.py file. It will prompt you for your ID range and tag criteria then start downloading.
 
 For tag search criteria:
 
@@ -64,4 +64,4 @@ It's pretty straightforward.
 
 ### Customization
 
-By default, all doujins will start off downloading in "temp" dir within the same directory as the downloader. When finished, they are moved to "finished" dir and then zipped within that dir. You can specify absolute or relative paths to where you want the temp/finished directory to be by editing the constants at the top of the Downloader.py file. You can also change the index/archive files if you so choose. Don't mess with NH_BASE or SOURCE.
+By default, all doujins will start off downloading in "temp" dir within the same directory as the downloader. When finished, they are moved to "finished" dir and then zipped within that dir. You can specify absolute or relative paths to where you want the temp/finished directory to be by editing the constants at the top of the Downloader.py file. Don't mess with NH_BASE or SOURCE. Also, do not change the index/archive file names at the moment as some filenames are still hardcoded in.
