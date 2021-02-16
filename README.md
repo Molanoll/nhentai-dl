@@ -14,8 +14,6 @@ I  have provided an index.txt file that has over 50,000 entries in it. ID range 
 
 ### Requirements
 
-OS: Currently built for Windows
-
 Python 3
 
 Some dependencies (if not already installed):
@@ -66,4 +64,4 @@ It's pretty straightforward.
 
 ### Customization
 
-By default, all doujins will start off downloading in "temp" dir within the same directory as the downloader. When finished, they are moved to "finished" dir and then zipped within that dir. You can specify absolute or relative paths to where you want the temp/finished directory to be by editing the constants at the top of the Downloader.py file. Don't mess with NH_BASE or SOURCE. Also, do not change the index/archive file names at the moment as some filenames are still hardcoded in.
+By default, all doujins will start off downloading in "temp" dir within the same directory as the downloader. When finished, they are moved to "finished" dir and then zipped within that dir. You can specify absolute or relative paths to where you want the temp/finished directory to be by editing the constants at the top of the Downloader.py file. Don't mess with NH_BASE or SOURCE.
