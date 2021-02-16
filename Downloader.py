@@ -17,7 +17,7 @@ FINISHED_DIR = "finished"
 def main():
 
   #First read index into memory
-  indexDict = ir.readIndex() 
+  indexDict = ir.readIndex(INDEX_NAME) 
 
   #Get search space from user
   startID = int(input("ID to start at: "))
@@ -76,7 +76,7 @@ def main():
     #All info gathered about doujin, add to index for future searches
     newDoujin = ir.Doujin(source=SOURCE, URL=djURL, pages=pageNum, title=djTitle, tags=tags, ID=i)
 #   indexDict[int(newDoujin.ID)] = newDoujin
-    ir.addToIndex(newDoujin)
+    ir.addToIndex(INDEX_NAME, newDoujin)
 
     if ((not checkValidSubset(tags, whitelistTags)) and (whitelistTags != [])):
       print("Skipping (invalid tags) " + str(i) + ": " + djTitle + "\n")
@@ -87,10 +87,12 @@ def main():
     (galleryUrl, imgExt) = getGalleryInfo(djURL)
 
     #Initialize directory for downloading
+    tempDirPath = os.path.join(TEMP_DIR, folderTitle)
     try:
-      os.mkdir(TEMP_DIR + "\\" + folderTitle)
+      os.mkdir(tempDirPath)
+#     os.mkdir(TEMP_DIR + "\\" + folderTitle)
     except FileExistsError:
-      fileList = os.listdir(TEMP_DIR + "\\" + folderTitle)
+      fileList = os.listdir(tempDirPath)
       #If folder has correct page num, add to archive 
       if (len(fileList) == pageNum+1):
         archiveList.append(i)
@@ -98,11 +100,12 @@ def main():
         moveTempToComplete(folderTitle)
         continue
       else:
-        shutil.rmtree(TEMP_DIR + "\\" + folderTitle)
-        os.mkdir(TEMP_DIR + "\\" + folderTitle)
+        shutil.rmtree(tempDirPath)
+        os.mkdir(tempDirPath)
 
     #Place tags in new folder
-    tagFileName = TEMP_DIR + "\\" + folderTitle + "\\" + "info.txt"
+    tagFileName = os.path.join(tempDirPath, "info.txt")
+#   tagFileName = TEMP_DIR + "\\" + folderTitle + "\\" + "info.txt"
     tagFileOpen = open(tagFileName, "w")
     tagFileOpen.write("TAGS: ")
     for j in range(0, len(tags)):
@@ -131,7 +134,8 @@ def main():
           imgR = requests.get(imgUrl)
 
       #Save web image to local image file
-      fname = TEMP_DIR + "\\" + folderTitle + "\\" + str(j) + imgExt
+      fname = os.path.join(tempDirPath, str(j) + imgExt)
+#     fname = TEMP_DIR + "\\" + folderTitle + "\\" + str(j) + imgExt
       fin = open(fname, 'wb')
       fin.write(imgR.content)
       fin.close()
@@ -174,21 +178,32 @@ def getGalleryInfo(dUrl):
 '
 '''
 def moveTempToComplete(folderName):
+  tempDirPath = os.path.join(TEMP_DIR, folderName)
+  finishedDirPath = os.path.join(FINISHED_DIR, folderName)
   try:
-    shutil.move(TEMP_DIR + "\\" + folderName, FINISHED_DIR + "\\")
-    shutil.make_archive(FINISHED_DIR + "\\" + folderName, format="zip", root_dir=FINISHED_DIR + "\\", base_dir=folderName)
-    shutil.rmtree(FINISHED_DIR + "\\" + folderName)
+    shutil.move(tempDirPath, FINISHED_DIR)
+#   shutil.move(TEMP_DIR + "\\" + folderName, FINISHED_DIR)
+    shutil.make_archive(finishedDirPath, format="zip", root_dir=FINISHED_DIR, base_dir=folderName)
+#   shutil.make_archive(FINISHED_DIR + "\\" + folderName, format="zip", root_dir=FINISHED_DIR + "\\", base_dir=folderName)
+    shutil.rmtree(finishedDirPath)
+#   shutil.rmtree(FINISHED_DIR + "\\" + folderName)
   except shutil.Error:
     i = 2
 
-    while (os.path.exists(FINISHED_DIR + "\\"  + folderName + " " + str(i))):
+    while (os.path.exists(finishedDirPath + " " + str(i))):
       i += 1
     
     newFolderName = folderName + " " + str(i)
-    shutil.move(TEMP_DIR + "\\" + folderName, TEMP_DIR + "\\" + newFolderName)
-    shutil.move(TEMP_DIR + "\\" + folderName + " " + str(i), FINISHED_DIR + "\\")
-    shutil.make_archive(FINISHED_DIR + "\\" + newFolderName, format-"zip", root_dir=FINISHED_DIR + "\\", base_dir=newFolderName)
-    shutil.rmtree(FINISHED_DIR + "\\" + newFolderName)
+    newDirPath = os.path.join(TEMP_DIR, newFolderName)
+    newFinishedDirPath = os.path.join(FINISHED_DIR, newFolderName)
+
+    shutil.move(tempDirPath, newDirPath)
+#   shutil.move(TEMP_DIR + "\\" + folderName, TEMP_DIR + "\\" + newFolderName)
+    shutil.move(newDirPath, FINISHED_DIR)
+#   shutil.move(TEMP_DIR + "\\" + folderName + " " + str(i), FINISHED_DIR + "\\")
+    shutil.make_archive(newFinishedDirPath, format-"zip", root_dir=FINISHED_DIR, base_dir=newFolderName)
+#   shutil.make_archive(FINISHED_DIR + "\\" + newFolderName, format-"zip", root_dir=FINISHED_DIR + "\\", base_dir=newFolderName)
+    shutil.rmtree(newFinishedDirPath)
   return
 
 '''
@@ -200,7 +215,7 @@ def backupArchive(fname):
   try:
     f = open(fname, "r")
     text = f.read()
-    fbackup = open(ARCHIVE_NAME + ".backup", "w+")
+    fbackup = open(fname + ".backup", "w+")
     fbackup.write(text)
     f.close()
     fbackup.close()
@@ -237,6 +252,7 @@ def fixTitleName(fname):
   fname = fname.replace("|", " ")
   fname = fname.replace("?", " ")
   fname = fname.replace("*", " ")
+  fname = fname.replace("\t", " ")
 
   if (len(fname) > 251):
     fname = fname[:250]

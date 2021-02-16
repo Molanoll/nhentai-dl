@@ -19,6 +19,15 @@ class Doujin():
 
   #Converts information into standardized text format
   def format(self):
+
+#   doujinText = "{\n"
+#   doujinText += "  \"source\": \"" + self.source + "\",\n"
+#   doujinText += "  \"id\": \"" + self.ID + "\",\n"
+#   doujinText += "  \"url\": \"" + self.URL + "\",\n"
+#   doujinText += "  \"title\": \"" + self.title + "\",\n"
+#   doujinText += "  \"pages\": \"" + self.pages + "\",\n"
+#   doujinText += "  \"tags\": \"" + listToCommaString(self.tags) + "\"\n"
+#   doujinText += "}"
     doujinText =  "BEGIN\n"
     doujinText += "SOURCE:" + self.source                  + "\n"
     doujinText += "ID:"     + self.ID                      + "\n"
@@ -28,7 +37,7 @@ class Doujin():
     doujinText += "TAGS:"   + listToCommaString(self.tags) + "\n"
     doujinText += "END"
     return doujinText
-    
+
   def setSource(self, source):
     self.source = source
 
@@ -114,14 +123,14 @@ def commaStringToList(s):
 '    Relies on index.txt not being messed with by the unwise.
 '
 '''
-def readIndex():
+def readIndex(indexName):
   try:
-    open("index.txt", "r+").close()
+    open(indexName, "r+").close()
   except IOError:
-    print("No index.txt file found. Creating new one.")
-    open("index.txt", "w+").close()
+    print("No " + indexName + " file found. Creating new one.")
+    open(indexName, "w+").close()
 
-  f = open("index.txt", "r+")
+  f = open(indexName, "r+")
   
   doujinDict = {}
   newDoujin = Doujin()
@@ -187,19 +196,20 @@ def backupIndex(indexName):
 '
 ' addToIndex(newDj)
 '
-' Parameters : newDj : doujin item to be added to index
+' Parameters   : indexName : name of index file
+                 newDj     : doujin item to be added to index
 '
 ' Return Value : 0 if success, 1 if failure
 '
-' Description :
+' Description  :
 '
 '    Takes a single doujin item and adds it to the index.
 '
 '''
-def addToIndex(newDj):
+def addToIndex(indexName, newDj):
 
   try:
-    indexFile = open("index.txt", "a")
+    indexFile = open(indexName, "a")
     indexFile.write(newDj.format())
     indexFile.write("\n")
     indexFile.close()
